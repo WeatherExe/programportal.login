@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Login Portal</title>
+    <!-- Include Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js"></script>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Program Portal</h1>
+        <img src="logo.png" alt="Logo" class="logo">
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Employee E-mail</label>
+                <input type="email" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login to Portal</button>
+            <button type="button" onclick="alert('Please head back to our homepage to receive assistance with the dashboard login')">Need Help?</button>
+        </form>
+    </div>
+
+    <!-- Firebase configuration and initialization -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-auth.js";
+    
+        const firebaseConfig = {
+            apiKey: "AIzaSyCA4c9zCv2HEjRNgqNdcwbWsTFNRy_z1sw",
+            authDomain: "team-share-id.firebaseapp.com",
+            projectId: "team-share-id",
+            storageBucket: "team-share-id.appspot.com",
+            messagingSenderId: "589924862858",
+            appId: "1:589924862858:web:3fe813de93dd19bed49673",
+            measurementId: "G-2CY2LYZHV8"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+    
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+    
+            var email = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+    
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    // Redirect to another page or perform some other actions
+                    window.location.href = 'https://www.example.com/dashboard';
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert('Error: ' + errorMessage);
+                });
+        });
+    </script>
+    
+
+    <!-- Custom script to handle authentication -->
+    <script src="scripts.js"></script>
+</body>
+</html>
